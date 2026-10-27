@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guest Shift — RSVP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f0d0b;
+      --card: #1a1613;
+      --line: #3a312a;
+      --text: #f3ebe1;
+      --muted: #a8998a;
+      --accent: #d9a35b;
+      --accent-ink: #1a1209;
+      --error: #e87b6b;
+      --ok: #8fc79a;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(217,163,91,.18), transparent 70%),
+        var(--bg);
+      color: var(--text);
+      font: 16px/1.5 Inter, system-ui, sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 48px 16px;
+    }
+    main { width: 100%; max-width: 460px; }
+
+    .eyebrow {
+      font-size: 12px; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--accent); margin: 0 0 12px;
+    }
+    h1 {
+      font-family: Fraunces, Georgia, serif; font-weight: 600;
+      font-size: clamp(36px, 9vw, 52px); line-height: 1.05; margin: 0 0 16px;
+    }
+    .details {
+      display: grid; gap: 4px; margin: 0 0 32px; padding: 0;
+      list-style: none; color: var(--muted);
+    }
+    .details strong { color: var(--text); font-weight: 500; }
+
+    form, .done {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 16px; padding: 24px;
+    }
+    .field { margin-bottom: 18px; }
+    label, .legend {
+      display: block; font-size: 13px; font-weight: 500;
+      color: var(--muted); margin-bottom: 6px;
+    }
+    input[type=text], input[type=tel], input[type=email] {
+      width: 100%; padding: 12px 14px; font: inherit; color: var(--text);
+      background: var(--bg); border: 1px solid var(--line); border-radius: 10px;
+      outline: none; transition: border-color .15s;
+    }
+    input:focus { border-color: var(--accent); }
+    .hint { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    .rsvp { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .rsvp input { position: absolute; opacity: 0; pointer-events: none; }
+    .rsvp label {
+      margin: 0; text-align: center; padding: 12px; cursor: pointer;
+      border: 1px solid var(--line); border-radius: 10px;
+      color: var(--text); font-size: 15px; transition: all .15s;
+    }
+    .rsvp input:checked + label {
+      background: var(--accent); border-color: var(--accent); color: var(--accent-ink);
+    }
+    .rsvp input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    button {
+      width: 100%; margin-top: 8px; padding: 14px; font: inherit; font-weight: 600;
+      background: var(--accent); color: var(--accent-ink);
+      border: 0; border-radius: 10px; cursor: pointer; transition: opacity .15s;
+    }
+    button:disabled { opacity: .5; cursor: wait; }
+    .msg { min-height: 20px; margin: 12px 0 0; font-size: 14px; color: var(--error); }
+
+    .done { text-align: center; }
+    .done h2 { font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 28px; margin: 0 0 8px; }
+    .done p { color: var(--muted); margin: 0; }
+    .done a { color: var(--accent); }
+    [hidden] { display: none !important; }
+
+    footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 24px; }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- ✏️ Edit the event details here -->
+    <p class="eyebrow">Guest Shift</p>
+    <h1>Bartender Name<br />takes the bar</h1>
+    <ul class="details">
+      <li><strong>Date:</strong> Saturday, 15 November</li>
+      <li><strong>Time:</strong> 8 PM onwards</li>
+      <li><strong>Venue:</strong> Venue name, City</li>
+    </ul>
+
+    <form id="rsvp-form" novalidate>
+      <div class="field">
+        <label for="name">Full name</label>
+        <input id="name" name="name" type="text" autocomplete="name" required />
+      </div>
+      <div class="field">
+        <label for="phone">Phone number</label>
+        <input id="phone" name="phone" type="tel" autocomplete="tel" required />
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required />
+      </div>
+      <div class="field">
+        <label for="idNumber">ID number</label>
+        <input id="idNumber" name="idNumber" type="text" autocomplete="off" required />
+        <p class="hint">Bring the same ID to the door. 21+ only.</p>
+      </div>
+      <div class="field">
+        <span class="legend">Will you be there?</span>
+        <div class="rsvp" role="radiogroup">
+          <input id="rsvp-yes" type="radio" name="rsvp" value="Yes" required />
+          <label for="rsvp-yes">Yes, I'm in</label>
+          <input id="rsvp-no" type="radio" name="rsvp" value="No" />
+          <label for="rsvp-no">Can't make it</label>
+        </div>
+      </div>
+      <button type="submit" id="submit">Send RSVP</button>
+      <p class="msg" id="msg" role="alert"></p>
+    </form>
+
+    <div class="done" id="done" hidden>
+      <h2 id="done-title">You're on the list.</h2>
+      <p id="done-text">See you at the bar.</p>
+      <p style="margin-top:16px"><a href="#" id="again">Change my RSVP</a></p>
+    </div>
+
+    <footer>Your details are only used for entry to this event.</footer>
+  </main>
+
+  <script>
+    // ✏️ Paste your Apps Script web-app URL here (see README.md)
+    const SCRIPT_URL = 'PASTE_YOUR_WEB_APP_URL_HERE';
+
+    const form = document.getElementById('rsvp-form');
+    const msg = document.getElementById('msg');
+    const btn = document.getElementById('submit');
+    const done = document.getElementById('done');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.textContent = '';
+
+      const f = new FormData(form);
+      const data = {
+        name: (f.get('name') || '').trim(),
+        phone: (f.get('phone') || '').trim(),
+        email: (f.get('email') || '').trim(),
+        idNumber: (f.get('idNumber') || '').trim(),
+        rsvp: f.get('rsvp') || '',
+      };
+
+      if (!data.name || !data.phone || !data.email || !data.idNumber || !data.rsvp) {
+        msg.textContent = 'Please fill in every field.';
+        return;
+      }
+      if (!/^\S+@\S+\.\S+$/.test(data.email)) {
+        msg.textContent = 'That email doesn’t look right.';
+        return;
+      }
+      if (data.phone.replace(/\D/g, '').length < 7) {
+        msg.textContent = 'That phone number looks too short.';
+        return;
+      }
+      if (SCRIPT_URL.startsWith('PASTE')) {
+        msg.textContent = 'Setup needed: add the Apps Script URL in index.html.';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      try {
+        // text/plain avoids a CORS preflight, which Apps Script can't answer.
+        const res = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(data),
+        });
+        const out = await res.json();
+        if (!out.ok) throw new Error(out.error || 'Something went wrong.');
+
+        document.getElementById('done-title').textContent =
+          data.rsvp === 'Yes' ? 'You’re on the list.' : 'Thanks for letting us know.';
+        document.getElementById('done-text').textContent =
+          data.rsvp === 'Yes'
+            ? (out.updated ? 'Your RSVP was updated. See you at the bar.' : 'See you at the bar.')
+            : 'Hope to catch you at the next one.';
+        form.hidden = true;
+        done.hidden = false;
+      } catch (err) {
+        msg.textContent = err.message || 'Couldn’t send. Check your connection and try again.';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Send RSVP';
+      }
+    });
+
+    document.getElementById('again').addEventListener('click', (e) => {
+      e.preventDefault();
+      done.hidden = true;
+      form.hidden = false;
+    });
+  </script>
+</body>
+</html>
