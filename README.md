@@ -1,6 +1,6 @@
 # Guest Shift RSVP
 
-A one-page RSVP form. Guests enter their name, phone, email, ID number and Yes/No. Each response goes into a Google Sheet.
+A one-page RSVP form. Guests enter their name, phone, email and Yes/No. Each response goes into a Google Sheet.
 
 - `index.html` is the page you host.
 - `apps-script/Code.gs` is the small Google script that writes responses to the sheet.
@@ -42,4 +42,4 @@ Submit one test RSVP and check that a new **RSVPs** tab appears in the sheet wit
 If you edit `Code.gs`, go to **Deploy → Manage deployments → Edit (pencil) → Version: New version → Deploy**. That keeps the same URL. Making a *new* deployment gives you a new URL, which you'd then have to paste into `index.html` again.
 
 ## Privacy
-The sheet holds ID numbers and phone numbers, so keep it private. Only share it with the people working the door. The web app URL can only add rows; it can't read the sheet.
+The sheet holds phone numbers and emails, so keep it private. The web app URL can only add rows; it can't read the sheet.

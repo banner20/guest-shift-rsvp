@@ -119,11 +119,6 @@
         <input id="email" name="email" type="email" autocomplete="email" required />
       </div>
       <div class="field">
-        <label for="idNumber">ID number</label>
-        <input id="idNumber" name="idNumber" type="text" autocomplete="off" required />
-        <p class="hint">Bring the same ID to the door. 21+ only.</p>
-      </div>
-      <div class="field">
         <span class="legend">Will you be there?</span>
         <div class="rsvp" role="radiogroup">
           <input id="rsvp-yes" type="radio" name="rsvp" value="Yes" required />
@@ -147,7 +142,7 @@
 
   <script>
     // ✏️ Paste your Apps Script web-app URL here (see README.md)
-    const SCRIPT_URL = 'PASTE_YOUR_WEB_APP_URL_HERE';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwgEwuScQ_viFRy8JSikylbcI2b--HyCn4BhGfqW7fLU9mY8h2LNPs2MyL4LxMLFR5s-A/exec';
 
     const form = document.getElementById('rsvp-form');
     const msg = document.getElementById('msg');
@@ -163,11 +158,10 @@
         name: (f.get('name') || '').trim(),
         phone: (f.get('phone') || '').trim(),
         email: (f.get('email') || '').trim(),
-        idNumber: (f.get('idNumber') || '').trim(),
         rsvp: f.get('rsvp') || '',
       };
 
-      if (!data.name || !data.phone || !data.email || !data.idNumber || !data.rsvp) {
+      if (!data.name || !data.phone || !data.email || !data.rsvp) {
         msg.textContent = 'Please fill in every field.';
         return;
       }
@@ -177,10 +171,6 @@
       }
       if (data.phone.replace(/\D/g, '').length < 7) {
         msg.textContent = 'That phone number looks too short.';
-        return;
-      }
-      if (SCRIPT_URL.startsWith('PASTE')) {
-        msg.textContent = 'Setup needed: add the Apps Script URL in index.html.';
         return;
       }
 

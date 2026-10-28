@@ -7,7 +7,7 @@
  */
 
 const SHEET_NAME = 'RSVPs';
-const HEADERS = ['Timestamp', 'Name', 'Phone', 'Email', 'ID Number', 'RSVP', 'Updated'];
+const HEADERS = ['Timestamp', 'Name', 'Phone', 'Email', 'RSVP', 'Updated'];
 
 function doPost(e) {
   const lock = LockService.getScriptLock();
@@ -18,10 +18,9 @@ function doPost(e) {
     const name = clean(data.name);
     const phone = clean(data.phone);
     const email = clean(data.email).toLowerCase();
-    const idNumber = clean(data.idNumber);
     const rsvp = data.rsvp === 'Yes' ? 'Yes' : data.rsvp === 'No' ? 'No' : '';
 
-    if (!name || !phone || !email || !idNumber || !rsvp) {
+    if (!name || !phone || !email || !rsvp) {
       return json({ ok: false, error: 'Please fill in every field.' });
     }
 
@@ -35,13 +34,13 @@ function doPost(e) {
       for (let i = 0; i < emails.length; i++) {
         if (String(emails[i][0]).toLowerCase() === email) {
           const row = i + 2;
-          sheet.getRange(row, 2, 1, 6).setValues([[name, phone, email, idNumber, rsvp, now]]);
+          sheet.getRange(row, 2, 1, 5).setValues([[name, phone, email, rsvp, now]]);
           return json({ ok: true, updated: true });
         }
       }
     }
 
-    sheet.appendRow([now, name, phone, email, idNumber, rsvp, '']);
+    sheet.appendRow([now, name, phone, email, rsvp, '']);
     return json({ ok: true, updated: false });
   } catch (err) {
     return json({ ok: false, error: 'Something went wrong. Please try again.' });
@@ -63,9 +62,8 @@ function getSheet() {
     sheet.appendRow(HEADERS);
     sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
     sheet.setFrozenRows(1);
-    // Keep phone / ID as plain text so leading zeros and + signs survive.
+    // Keep phone as plain text so leading zeros and + signs survive.
     sheet.getRange('C:C').setNumberFormat('@');
-    sheet.getRange('E:E').setNumberFormat('@');
   }
   return sheet;
 }
