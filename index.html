@@ -3,19 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Guest Shift — RSVP</title>
+  <title>Nitin Tewari's Bartender Meetup — RSVP</title>
+  <meta property="og:title" content="Nitin Tewari's Bartender Meetup" />
+  <meta property="og:description" content="Tue 3 Nov 2026 · 2:00–4:30 PM · Mumbai. RSVP here." />
+  <meta property="og:image" content="https://banner20.github.io/guest-shift-rsvp/flyer.webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0f0d0b;
-      --card: #1a1613;
-      --line: #3a312a;
-      --text: #f3ebe1;
-      --muted: #a8998a;
-      --accent: #d9a35b;
-      --accent-ink: #1a1209;
+      --bg: #0c0a09;
+      --card: #171310;
+      --line: #3a2c24;
+      --text: #f7e8cc;
+      --muted: #b09d86;
+      --accent: #ff4b17;
+      --accent-ink: #120805;
       --error: #e87b6b;
       --ok: #8fc79a;
     }
@@ -24,7 +27,7 @@
     body {
       min-height: 100vh;
       background:
-        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(217,163,91,.18), transparent 70%),
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255,75,23,.16), transparent 70%),
         var(--bg);
       color: var(--text);
       font: 16px/1.5 Inter, system-ui, sans-serif;
@@ -38,10 +41,15 @@
       font-size: 12px; letter-spacing: .2em; text-transform: uppercase;
       color: var(--accent); margin: 0 0 12px;
     }
-    h1 {
-      font-family: Fraunces, Georgia, serif; font-weight: 600;
-      font-size: clamp(36px, 9vw, 52px); line-height: 1.05; margin: 0 0 16px;
+    .flyer {
+      display: block; width: 100%; height: auto; aspect-ratio: 1517 / 2000;
+      border-radius: 12px; margin: 0 0 28px; background: var(--card);
     }
+    h1 {
+      font-family: Anton, Impact, sans-serif; font-weight: 400; text-transform: uppercase;
+      font-size: clamp(38px, 11vw, 56px); line-height: 1; margin: 0 0 16px;
+    }
+    h1 span { color: var(--accent); display: block; }
     .details {
       display: grid; gap: 4px; margin: 0 0 32px; padding: 0;
       list-style: none; color: var(--muted);
@@ -86,7 +94,7 @@
     .msg { min-height: 20px; margin: 12px 0 0; font-size: 14px; color: var(--error); }
 
     .done { text-align: center; }
-    .done h2 { font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 28px; margin: 0 0 8px; }
+    .done h2 { font-family: Anton, Impact, sans-serif; font-weight: 400; text-transform: uppercase; font-size: 30px; margin: 0 0 8px; }
     .done p { color: var(--muted); margin: 0; }
     .done a { color: var(--accent); }
     [hidden] { display: none !important; }
@@ -97,12 +105,14 @@
 <body>
   <main>
     <!-- ✏️ Edit the event details here -->
-    <p class="eyebrow">Guest Shift</p>
-    <h1>Bartender Name<br />takes the bar</h1>
+    <img class="flyer" src="flyer.webp" width="1517" height="2000"
+         alt="Bartender Meetup with Nitin Tewari aka Mr. Bartrender, Eastern Craft Academy. 2:00–4:30, 03 Nov 2026, Mumbai." />
+    <p class="eyebrow">Eastern Craft Academy</p>
+    <h1>Nitin Tewari's <span>Bartender Meetup</span></h1>
     <ul class="details">
-      <li><strong>Date:</strong> Saturday, 15 November</li>
-      <li><strong>Time:</strong> 8 PM onwards</li>
-      <li><strong>Venue:</strong> Venue name, City</li>
+      <li><strong>Date:</strong> Tuesday, 3 November 2026</li>
+      <li><strong>Time:</strong> 2:00 – 4:30 PM</li>
+      <li><strong>Venue:</strong> Mumbai, venue to be announced soon</li>
     </ul>
 
     <form id="rsvp-form" novalidate>
