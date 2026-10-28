@@ -121,6 +121,11 @@
         <input id="name" name="name" type="text" autocomplete="name" required />
       </div>
       <div class="field">
+        <label for="bar">Bar name</label>
+        <input id="bar" name="bar" type="text" autocomplete="organization" required />
+        <p class="hint">The bar you currently work at.</p>
+      </div>
+      <div class="field">
         <label for="phone">Phone number</label>
         <input id="phone" name="phone" type="tel" autocomplete="tel" required />
       </div>
@@ -143,7 +148,7 @@
 
     <div class="done" id="done" hidden>
       <h2 id="done-title">You're on the list.</h2>
-      <p id="done-text">See you at the bar.</p>
+      <p id="done-text">Once you’re shortlisted, we’ll send you the invite.</p>
       <p style="margin-top:16px"><a href="#" id="again">Change my RSVP</a></p>
     </div>
 
@@ -166,12 +171,13 @@
       const f = new FormData(form);
       const data = {
         name: (f.get('name') || '').trim(),
+        bar: (f.get('bar') || '').trim(),
         phone: (f.get('phone') || '').trim(),
         email: (f.get('email') || '').trim(),
         rsvp: f.get('rsvp') || '',
       };
 
-      if (!data.name || !data.phone || !data.email || !data.rsvp) {
+      if (!data.name || !data.bar || !data.phone || !data.email || !data.rsvp) {
         msg.textContent = 'Please fill in every field.';
         return;
       }
@@ -200,7 +206,7 @@
           data.rsvp === 'Yes' ? 'You’re on the list.' : 'Thanks for letting us know.';
         document.getElementById('done-text').textContent =
           data.rsvp === 'Yes'
-            ? (out.updated ? 'Your RSVP was updated. See you at the bar.' : 'See you at the bar.')
+            ? (out.updated ? 'Your RSVP was updated. ' : '') + 'Once you’re shortlisted, we’ll send you the invite.'
             : 'Hope to catch you at the next one.';
         form.hidden = true;
         done.hidden = false;

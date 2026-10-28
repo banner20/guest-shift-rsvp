@@ -1,6 +1,6 @@
 # Guest Shift RSVP
 
-A one-page RSVP form. Guests enter their name, phone, email and Yes/No. Each response goes into a Google Sheet.
+A one-page RSVP form. Guests enter their name, bar name, phone, email and Yes/No. Each response goes into a Google Sheet.
 
 - `index.html` is the page you host.
 - `apps-script/Code.gs` is the small Google script that writes responses to the sheet.

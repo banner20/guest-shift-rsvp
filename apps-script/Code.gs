@@ -7,7 +7,7 @@
  */
 
 const SHEET_NAME = 'RSVPs';
-const HEADERS = ['Timestamp', 'Name', 'Phone', 'Email', 'RSVP', 'Updated'];
+const HEADERS = ['Timestamp', 'Name', 'Bar', 'Phone', 'Email', 'RSVP', 'Updated'];
 
 function doPost(e) {
   const lock = LockService.getScriptLock();
@@ -16,11 +16,12 @@ function doPost(e) {
     const data = JSON.parse(e.postData.contents);
 
     const name = clean(data.name);
+    const bar = clean(data.bar);
     const phone = clean(data.phone);
     const email = clean(data.email).toLowerCase();
     const rsvp = data.rsvp === 'Yes' ? 'Yes' : data.rsvp === 'No' ? 'No' : '';
 
-    if (!name || !phone || !email || !rsvp) {
+    if (!name || !bar || !phone || !email || !rsvp) {
       return json({ ok: false, error: 'Please fill in every field.' });
     }
 
@@ -30,17 +31,17 @@ function doPost(e) {
     // Same email RSVPs again → update their row instead of adding a duplicate.
     const lastRow = sheet.getLastRow();
     if (lastRow > 1) {
-      const emails = sheet.getRange(2, 4, lastRow - 1, 1).getValues();
+      const emails = sheet.getRange(2, 5, lastRow - 1, 1).getValues();
       for (let i = 0; i < emails.length; i++) {
         if (String(emails[i][0]).toLowerCase() === email) {
           const row = i + 2;
-          sheet.getRange(row, 2, 1, 5).setValues([[name, phone, email, rsvp, now]]);
+          sheet.getRange(row, 2, 1, 6).setValues([[name, bar, phone, email, rsvp, now]]);
           return json({ ok: true, updated: true });
         }
       }
     }
 
-    sheet.appendRow([now, name, phone, email, rsvp, '']);
+    sheet.appendRow([now, name, bar, phone, email, rsvp, '']);
     return json({ ok: true, updated: false });
   } catch (err) {
     return json({ ok: false, error: 'Something went wrong. Please try again.' });
@@ -63,7 +64,7 @@ function getSheet() {
     sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
     sheet.setFrozenRows(1);
     // Keep phone as plain text so leading zeros and + signs survive.
-    sheet.getRange('C:C').setNumberFormat('@');
+    sheet.getRange('D:D').setNumberFormat('@');
   }
   return sheet;
 }
